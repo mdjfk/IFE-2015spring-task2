@@ -13,12 +13,7 @@ function isFunction(fn) {
 function cloneObject(src) {
     var newobject = {};
     for (x in src) {
-        // typeof src[x] != "object" ? newobject[x] = src[x] : newobject[x] = cloneObject(src[x]);
-        if (typeof src[x] != "object") {
-            newobject[x] = src[x];
-        } else {
-            newobject[x] = cloneObject(src[x]);
-        }
+        newobject[x] = typeof src[x] != "object" ? src[x] : cloneObject(src[x]);
     }
     return newobject;
 }
@@ -45,11 +40,25 @@ console.log(tarObj.b.b1[0]);    // "hello"
 
 // 对数组进行去重操作，只考虑数组中元素为数字或字符串，返回一个去重后的数组
 function uniqArray(arr) {
-    // your implement
+    var array = [],
+        len = arr.length;
+    for (var i = 0; i < len; i++) {
+        for (var j = i + 1, flag = 1; j < len; j++) {
+            if (arr[i] === arr[j]) {
+                flag = 0;
+                break;
+            }
+        }
+        if (flag) {
+            array[array.length] = arr[i];
+        }
+    }
+
+    return array;
 }
 
 // 使用示例
-var a = [1, 3, 5, 7, 5, 3];
+var a = [1, 3, 5, 7, 5, 3, "as"];
 var b = uniqArray(a);
 console.log(b); // [1, 3, 5, 7]
 
@@ -58,7 +67,16 @@ console.log(b); // [1, 3, 5, 7]
 // 假定空白字符只有半角空格、Tab
 // 练习通过循环，以及字符串的一些基本方法，分别扫描字符串str头部和尾部是否有连续的空白字符，并且删掉他们，最后返回一个完成去除的字符串
 function simpleTrim(str) {
-    // your implement
+    var s = "",
+        len = str.length, start, end;
+    for (var i = 0; i < len; i++) {
+        if (str[i] != "") {
+            start = i;
+            break;
+        }
+        s += str[i];
+
+    }
 }
 
 // 很多同学肯定对于上面的代码看不下去，接下来，我们真正实现一个trim
@@ -73,37 +91,37 @@ var str = '   hi!  ';
 str = trim(str);
 console.log(str); // 'hi!'
 
-// 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
-function each(arr, fn) {
-    // your implement
-}
+// // 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
+// function each(arr, fn) {
+//     // your implement
+// }
 
-// 其中fn函数可以接受两个参数：item和index
+// // 其中fn函数可以接受两个参数：item和index
 
-// 使用示例
-var arr = ['java', 'c', 'php', 'html'];
-function output(item) {
-    console.log(item)
-}
-each(arr, output);  // java, c, php, html
+// // 使用示例
+// var arr = ['java', 'c', 'php', 'html'];
+// function output(item) {
+//     console.log(item)
+// }
+// each(arr, output);  // java, c, php, html
 
-// 使用示例
-var arr = ['java', 'c', 'php', 'html'];
-function output(item, index) {
-    console.log(index + ': ' + item)
-}
-each(arr, output);  // 0:java, 1:c, 2:php, 3:html
+// // 使用示例
+// var arr = ['java', 'c', 'php', 'html'];
+// function output(item, index) {
+//     console.log(index + ': ' + item)
+// }
+// each(arr, output);  // 0:java, 1:c, 2:php, 3:html
 
-// 获取一个对象里面第一层元素的数量，返回一个整数
-function getObjectLength(obj) { }
+// // 获取一个对象里面第一层元素的数量，返回一个整数
+// function getObjectLength(obj) { }
 
-// 使用示例
-var obj = {
-    a: 1,
-    b: 2,
-    c: {
-        c1: 3,
-        c2: 4
-    }
-};
-console.log(getObjectLength(obj)); // 3
+// // 使用示例
+// var obj = {
+//     a: 1,
+//     b: 2,
+//     c: {
+//         c1: 3,
+//         c2: 4
+//     }
+// };
+// console.log(getObjectLength(obj)); // 3
