@@ -56,10 +56,25 @@ function uniqArray(arr) {
 
     return array;
 }
+function uniqArray2(arr) {
+    var array = [arr[0]],
+        len = arr.length;
+    for (let i = 1; i < len; i++) {
+        for (var j = i - 1; j >= 0; j--) {
+            if (arr[i] === arr[j]) {
+                break;
+            }
+        }
+        if (j < 0) {
+            array[array.length] = arr[i];
+        }
+    }
 
+    return array;
+}
 // 使用示例
 var a = [1, 3, 5, 7, 5, 3, "as"];
-var b = uniqArray(a);
+var b = uniqArray2(a);
 console.log(b); // [1, 3, 5, 7]
 
 // 中级班同学跳过此题
@@ -69,59 +84,106 @@ console.log(b); // [1, 3, 5, 7]
 function simpleTrim(str) {
     var s = "",
         len = str.length, start, end;
-    for (var i = 0; i < len; i++) {
-        if (str[i] != "") {
+    for (let i = 0; i < len; i++) {
+        if (str[i] !== " ") {
             start = i;
             break;
         }
-        s += str[i];
-
     }
+    for (let i = len - 1; i >= 0; i--) {
+        if (str[i] !== " ") {
+            end = i;
+            break;
+        }
+    }
+    for (let i = start; i <= end; i++) {
+        s += str[i];
+    }
+    return s;
 }
 
 // 很多同学肯定对于上面的代码看不下去，接下来，我们真正实现一个trim
 // 对字符串头尾进行空格字符的去除、包括全角半角空格、Tab等，返回一个字符串
 // 尝试使用一行简洁的正则表达式完成该题目
 function trim(str) {
-    // your implement
+    return str.replace(/^\s+|\s+$/g, '');
 }
 
 // 使用示例
-var str = '   hi!  ';
+var str = '  hi!     ';
 str = trim(str);
 console.log(str); // 'hi!'
 
-// // 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
-// function each(arr, fn) {
-//     // your implement
-// }
+// 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
+function each(arr, fn) {
+    var len = arr.length;
+    for (let i = 0; i < len; i++) {
+        fn(arr[i], i);
+    }
 
-// // 其中fn函数可以接受两个参数：item和index
+}
 
-// // 使用示例
-// var arr = ['java', 'c', 'php', 'html'];
-// function output(item) {
-//     console.log(item)
-// }
-// each(arr, output);  // java, c, php, html
+// 其中fn函数可以接受两个参数：item和index
 
-// // 使用示例
-// var arr = ['java', 'c', 'php', 'html'];
-// function output(item, index) {
-//     console.log(index + ': ' + item)
-// }
-// each(arr, output);  // 0:java, 1:c, 2:php, 3:html
+// 使用示例
+var arr = ['java', 'c', 'php', 'html'];
+function output(item) {
+    console.log(item);
+}
+each(arr, output);  // java, c, php, html
+
+// 使用示例2
+function output2(item, index) {
+    console.log(index + ': ' + item);
+}
+each(arr, output2);  // 0:java, 1:c, 2:php, 3:html
 
 // // 获取一个对象里面第一层元素的数量，返回一个整数
-// function getObjectLength(obj) { }
+function getObjectLength(obj) {
+    var cnt = 0;
+    for (key in obj) {
+        cnt++;
+    }
+    return cnt;
+}
 
-// // 使用示例
-// var obj = {
-//     a: 1,
-//     b: 2,
-//     c: {
-//         c1: 3,
-//         c2: 4
-//     }
-// };
-// console.log(getObjectLength(obj)); // 3
+// 使用示例
+var obj = {
+    a: 1,
+    b: 2,
+    c: {
+        c1: 3,
+        c2: 4
+    }
+};
+console.log(getObjectLength(obj)); // 3
+
+// 判断是否为邮箱地址
+function isEmail(emailStr) {
+    return /^[a-zA-Z0-9_\.-]+@[a-zA-Z0-9_\.-]+(\.[a-zA-Z0-9_\.-]+)+$/.test(emailStr);
+}
+
+// 判断是否为手机号
+function isMobilePhone(phone) {
+    return /^1[3568]\d{9}$/.test(phone);
+}
+
+// 为element增加一个样式名为newClassName的新样式
+function addClass(element, newClassName) {
+    element.className += " " + newClassName;
+}
+
+// 移除element中的样式oldClassName
+function removeClass(element, oldClassName) {
+    element.classList.remove(oldClassName);
+}
+
+// 判断siblingNode和element是否为同一个父元素下的同一级的元素，返回bool值
+function isSiblingNode(element, siblingNode) {
+    // your implement
+}
+
+// 获取element相对于浏览器窗口的位置，返回一个对象{x, y}
+function getPosition(element) {
+    // your implement
+}

@@ -10,9 +10,16 @@
     <input id="number1" type="text">
     <input id="number2" type="text">
     <span id="result"></span>
-    <button id="addbtn"></button>
-    <script src="js/task0002-1.js"></script>
+    <button id="addbtn" class="class1"></button>
 
+
+    <script src="js/task0002-1.js"></script>
+    <script src="js/util.js"></script>
+    <script>
+        var ele = document.getElementById("addbtn");
+        addClass(ele, "class2");
+        console.log(ele.className);
+    </script>
 </body>
 
 </html>
