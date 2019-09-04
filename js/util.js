@@ -35,8 +35,8 @@ srcObj.b.b1[0] = "Hello";
 console.log(abObj.a);
 console.log(abObj.b.b1[0]);
 
-console.log(tarObj.a);      // 1
-console.log(tarObj.b.b1[0]);    // "hello"
+console.log(tarObj.a); // 1
+console.log(tarObj.b.b1[0]); // "hello"
 
 // 对数组进行去重操作，只考虑数组中元素为数字或字符串，返回一个去重后的数组
 function uniqArray(arr) {
@@ -56,6 +56,7 @@ function uniqArray(arr) {
 
     return array;
 }
+
 function uniqArray2(arr) {
     var array = [arr[0]],
         len = arr.length;
@@ -83,7 +84,8 @@ console.log(b); // [1, 3, 5, 7]
 // 练习通过循环，以及字符串的一些基本方法，分别扫描字符串str头部和尾部是否有连续的空白字符，并且删掉他们，最后返回一个完成去除的字符串
 function simpleTrim(str) {
     var s = "",
-        len = str.length, start, end;
+        len = str.length,
+        start, end;
     for (let i = 0; i < len; i++) {
         if (str[i] !== " ") {
             start = i;
@@ -127,16 +129,17 @@ function each(arr, fn) {
 
 // 使用示例
 var arr = ['java', 'c', 'php', 'html'];
+
 function output(item) {
     console.log(item);
 }
-each(arr, output);  // java, c, php, html
+each(arr, output); // java, c, php, html
 
 // 使用示例2
 function output2(item, index) {
     console.log(index + ': ' + item);
 }
-each(arr, output2);  // 0:java, 1:c, 2:php, 3:html
+each(arr, output2); // 0:java, 1:c, 2:php, 3:html
 
 // // 获取一个对象里面第一层元素的数量，返回一个整数
 function getObjectLength(obj) {
@@ -170,7 +173,7 @@ function isMobilePhone(phone) {
 
 // 为element增加一个样式名为newClassName的新样式
 function addClass(element, newClassName) {
-    element.className += " " + newClassName;
+    element.classList.add(newClassName);
 }
 
 // 移除element中的样式oldClassName
@@ -180,10 +183,27 @@ function removeClass(element, oldClassName) {
 
 // 判断siblingNode和element是否为同一个父元素下的同一级的元素，返回bool值
 function isSiblingNode(element, siblingNode) {
-    // your implement
+    var p1 = element,
+        p2 = siblingNode,
+        i = 0,
+        j = 0;
+    while (p1) {
+        p1 = p1.parentNode;
+        i++;
+    }
+    while (p2) {
+        p2 = p2.parentNode;
+        j++;
+    }
+    return i == j ? true : false;
+
 }
 
 // 获取element相对于浏览器窗口的位置，返回一个对象{x, y}
 function getPosition(element) {
-    // your implement
+    var position = {
+        x: element.scrollLeft,
+        y: element.scrollTop
+    };
+    return position;
 }
