@@ -9,17 +9,22 @@
 <body>
     <input id="number1" type="text">
     <input id="number2" type="text">
-    <span id="result"></span>
+    <span id="result">
+        <p id="pp"></p>
+    </span>
     <button id="addbtn" class="class1"></button>
 
 
     <script src="js/task0002-1.js"></script>
     <script src="js/util.js"></script>
     <script>
-        var ele = document.getElementById("number2");
+        var ele = document.getElementById("number2"),
+            ele2 = document.getElementById("number1"),
+            ele3 = document.getElementById("pp");
+        console.log(isSiblingNode(ele, ele3));
         // addClass(ele, "class2");
         // console.log(ele.className);
-        console.log(getPosition(ele));
+        console.log(getPosition(ele2));
     </script>
 </body>
 
