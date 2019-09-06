@@ -1,6 +1,6 @@
-function $(id) {
-    return document.getElementById(id);
-}
+// function $(id) {
+//     return document.getElementById(id);
+// }
 
 function add(num1, num2) {
     return num1 + num2;
@@ -21,4 +21,4 @@ function initEvent() {
     $("addbtn").addEventListener("click", addEventHandle, false);
 }
 
-initEvent();
+// initEvent();

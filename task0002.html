@@ -8,23 +8,41 @@
 
 <body>
     <input id="number1" type="text">
-    <input id="number2" type="text">
+    <input id="number2" type="text" my_attr="2019">
+    <a href="" class="classa"></a>
+    <div id="adom">
+        <a href="" id="aa"></a>
+        <span class="classa"></span>
+        <a href="" class="classa"></a>
+    </div>
     <span id="result">
-        <p id="pp"></p>
+        <p id="pp" my_attr_name></p>
     </span>
-    <button id="addbtn" class="class1"></button>
+    <button id="addbtn" class="classa"></button>
 
 
     <script src="js/task0002-1.js"></script>
     <script src="js/util.js"></script>
     <script>
-        var ele = document.getElementById("number2"),
-            ele2 = document.getElementById("number1"),
-            ele3 = document.getElementById("pp");
-        console.log(isSiblingNode(ele, ele3));
+        var ele = $("#number2");
+        var a = $("#adom");
+        var b = $("a");
+        var c = $(".classa");
+        var d = $("#adom .classa");
+        var e = $("[my_attr_name]");
+        var f = $("[my_attr=2019]");
+        // ele2 = $("class1"),
+        // console.log(isSiblingNode(ele, ele3));
         // addClass(ele, "class2");
         // console.log(ele.className);
-        console.log(getPosition(ele2));
+        // console.log(getPosition(ele2));
+        // console.log(ele);
+        console.log(a);
+        console.log(b);
+        console.log(c);
+        console.log(d);
+        console.log(e);
+        console.log(f);
     </script>
 </body>
 

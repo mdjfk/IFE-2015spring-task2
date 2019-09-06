@@ -210,11 +210,48 @@ function getPosition(element) {
 
 // 实现一个简单的Query
 function $(selector) {
-    if (/^#/.test(selector)) {
-        var array;
-        if ((array = /^#(.+) \.(.+)/.exec(selector)) !== null ) {
-            document.getElementById(array[1]).getElementsByClassName(array[1])[0];
+    var array1;
+    if ((array1 = /^(#|\.|\[)([^\]]+)\]?$/.exec(selector)) !== null) {/* starts with #/./[ */
+        if ("." === array1[1]) { /* .class */
+            return document.getElementsByClassName(array1[2])[0];
+        } else if ("[" === array1[1]) { /* [attribute] */
+            var allElements = document.getElementsByTagName("*"),
+                len = allElements.length,
+                array2;
+            if ((array2 = /^(.+)\=(.+)$/.exec(array1[2])) !== null) {
+                // console.log(array2[1] + " " + array2[2]);
+                for (let i = 0; i < len; i++) {
+                    if (allElements[i].hasAttribute(array2[1]) && array2[2] === allElements[i].getAttribute(array2[1])) {
+                        return allElements[i];
+                    }
+
+                }
+            } else {
+                for (let i = 0; i < len; i++) {
+                    if (allElements[i].hasAttribute(array1[2])) {
+                        return allElements[i];
+                    }
+
+                }
+            }
+        } else if ("#" === array1[1]) { /* #id */
+            var array3;
+            if ((array3 = /^\#(.+) \.(.+)$/.exec(selector)) !== null) {
+                var node = document.getElementById(array3[1]).firstChild;
+                while (node !== null) {
+                    if (array3[2] === node.className) {
+                        return node;
+                    }
+                    node = node.nextSibling;
+                }
+            } else {
+                // console.log(array1[2]);
+                return document.getElementById(array1[2]);
+            }
         }
+
+    } else { /* not starts with #/./[ */
+        return document.getElementsByTagName(selector)[0];
     }
 }
 
