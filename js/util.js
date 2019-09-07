@@ -13,30 +13,34 @@ function isFunction(fn) {
 function cloneObject(src) {
     var newobject = {};
     for (x in src) {
-        newobject[x] = typeof src[x] != "object" ? src[x] : cloneObject(src[x]);
+        newobject[x] = (typeof src[x] != "object" || src[x] instanceof Date) ? src[x] : cloneObject(src[x]);
     }
     return newobject;
 }
 
 // 测试用例：
 var srcObj = {
-    a: 1,
+    a: [0, 1, 2],
     b: {
         b1: ["hello", "hi"],
         b2: "JavaScript"
-    }
+    },
+    c: new Date(79, 5, 24)
 };
 var abObj = srcObj;
 var tarObj = cloneObject(srcObj);
 
 srcObj.a = 2;
 srcObj.b.b1[0] = "Hello";
+srcObj.c = new Date(2019, 9, 7);
 
 console.log(abObj.a);
 console.log(abObj.b.b1[0]);
+console.log(abObj.c);
 
 console.log(tarObj.a); // 1
 console.log(tarObj.b.b1[0]); // "hello"
+console.log(tarObj.c); // 
 
 // 对数组进行去重操作，只考虑数组中元素为数字或字符串，返回一个去重后的数组
 function uniqArray(arr) {
@@ -211,10 +215,13 @@ function getPosition(element) {
 // 实现一个简单的Query
 function $(selector) {
     var array1;
-    if ((array1 = /^(#|\.|\[)([^\]]+)\]?$/.exec(selector)) !== null) {/* starts with #/./[ */
-        if ("." === array1[1]) { /* .class */
+    if ((array1 = /^(#|\.|\[)([^\]]+)\]?$/.exec(selector)) !== null) {
+        /* starts with #/./[ */
+        if ("." === array1[1]) {
+            /* .class */
             return document.getElementsByClassName(array1[2])[0];
-        } else if ("[" === array1[1]) { /* [attribute] */
+        } else if ("[" === array1[1]) {
+            /* [attribute] */
             var allElements = document.getElementsByTagName("*"),
                 len = allElements.length,
                 array2;
@@ -234,7 +241,8 @@ function $(selector) {
 
                 }
             }
-        } else if ("#" === array1[1]) { /* #id */
+        } else if ("#" === array1[1]) {
+            /* #id */
             var array3;
             if ((array3 = /^\#(.+) \.(.+)$/.exec(selector)) !== null) {
                 var node = document.getElementById(array3[1]).firstChild;
@@ -250,7 +258,8 @@ function $(selector) {
             }
         }
 
-    } else { /* not starts with #/./[ */
+    } else {
+        /* not starts with #/./[ */
         return document.getElementsByTagName(selector)[0];
     }
 }
@@ -271,3 +280,58 @@ $("[data-time=2015]"); // 返回第一个包含属性data-time且值为2015的�
 
 // 可以通过简单的组合提高查询便利性，例如
 $("#adom .classa"); // 返回id为adom的DOM所包含的所有子节点中，第一个样式定义包含classa的对象
+
+// addEvent给一个element绑定一个针对event事件的响应，响应函数为listener
+$.on = function (element, event, listener) {
+    element.addEventListener(event, listener, false);
+}
+
+// 例如：
+function clicklistener(event) {
+    console.log("id: " + this.id);
+    console.log("event type: " + event.type);
+    // removeEvent(this, event.type, arguments.callee);
+
+}
+// addEvent($("#addbtn"), "click", clicklistener);
+$.on($("#addbtn"), "click", clicklistener);
+
+// removeEvent移除element对象对于event事件发生时执行listener的响应
+$.un = function (element, event, listener) {
+    element.removeEventListener(event, listener, false);
+}
+
+// addClickEvent实现对click事件的绑定
+$.click = function (element, listener) {
+    element.addEventListener("click", listener, false);
+}
+// addClickEvent($("#addbtn"), clicklistener);
+
+// addEnterEvent实现对于按Enter键时的事件绑定
+$.enter = function (element, listener) {
+    element.addEventListener("keypress", function (event) {
+        // console.log(this.id);
+        if (event.keyCode === 13) {
+            listener(event);
+        }
+    }, false);
+}
+
+$.enter($("#number1"), clicklistener);
+
+// 先简单一些
+function delegateEvent(element, tag, eventName, listener) {
+    $.on(element, eventName, function (event) {
+        // console.log(event.target.tagName);
+        if (event.target.tagName === tag.toUpperCase()) {
+            listener(event);
+        }
+
+    });
+}
+
+$.delegate = delegateEvent;
+
+// 使用示例
+// 还是上面那段HTML，实现对list这个ul里面所有li的click事件进行响应
+$.delegate($("#list"), "li", "click", clicklistener);
