@@ -283,27 +283,27 @@ $("#adom .classa"); // 返回id为adom的DOM所包含的所有子节点中，第
 
 // addEvent给一个element绑定一个针对event事件的响应，响应函数为listener
 $.on = function (element, event, listener) {
-    element.addEventListener(event, listener, false);
+    $(element).addEventListener(event, listener, false);
 }
 
 // 例如：
 function clicklistener(event) {
-    console.log("id: " + this.id);
+    console.log("id: " + event.target.id);
     console.log("event type: " + event.type);
     // removeEvent(this, event.type, arguments.callee);
 
 }
 // addEvent($("#addbtn"), "click", clicklistener);
-$.on($("#addbtn"), "click", clicklistener);
+$.on("#addbtn", "click", clicklistener);
 
 // removeEvent移除element对象对于event事件发生时执行listener的响应
 $.un = function (element, event, listener) {
-    element.removeEventListener(event, listener, false);
+    $(element).removeEventListener(event, listener, false);
 }
 
 // addClickEvent实现对click事件的绑定
 $.click = function (element, listener) {
-    element.addEventListener("click", listener, false);
+    $(element).addEventListener("click", listener, false);
 }
 // addClickEvent($("#addbtn"), clicklistener);
 
@@ -334,4 +334,107 @@ $.delegate = delegateEvent;
 
 // 使用示例
 // 还是上面那段HTML，实现对list这个ul里面所有li的click事件进行响应
-$.delegate($("#list"), "li", "click", clicklistener);
+$.delegate("#list", "li", "click", clicklistener);
+
+// 使用示例：
+$.click("[my_attr_name]", clicklistener);
+
+// 判断是否为IE浏览器，返回-1或者版本号
+function isIE() {
+    // your implement
+}
+
+// 设置cookie
+function setCookie(cookieName, cookieValue, expiredays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (expiredays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cookieName + "=" + cookieValue + ";" + expires + ";path=/";
+}
+
+
+// 获取cookie值
+function getCookie(cookieName) {
+    var array = decodeURIComponent(document.cookie).split(";");
+    var name = cookieName + "=";
+    for (let i = 0; i < array.length; i++) {
+        let one = array[i];
+        let start = one.indexOf(name);
+        if (start > -1) {
+            return one.substring(start + name.length);
+        }
+    }
+    return "";
+}
+
+
+function addURLParam(url, str) {
+    var arr = str.split("&"),
+        len = arr.length;
+    for (let i = 0, re; i < len; i++) {
+        if ((re = /^(.+)\=(.+)$/.exec(arr[i])) !== null) {
+            url += url.indexOf("?") == -1 ? "?" : "&";
+            url += encodeURIComponent(re[1]) + "=" + encodeURIComponent(re[2]);
+        }
+    }
+    return url;
+
+}
+// 
+function ajax(url, options) {
+    var xhr = new XMLHttpRequest(),
+        type = "get",
+        dataToSend = null,
+        onsuccess = null,
+        onfail = null;
+    for (x in options) {
+        switch (x) {
+            case "type":
+                type = options[x];
+                break;
+            case "data":
+                if (typeof options[x] == "string") {
+                    url = addURLParam(url, options[x]);
+                } else {
+                    dataToSend = options[x];
+                }
+                break;
+            case "onsuccess":
+                onsuccess = options[x];
+                break;
+            case "onfail":
+                onfail = options[x];
+                break;
+            default:
+                break;
+        }
+    }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304)) {
+            if (onsuccess) {
+                onsuccess(xhr.responseText);
+            }
+        } else if (onfail) {
+            onfail(xhr);
+        }
+
+    };
+    xhr.open(type, url, true);
+    xhr.send(dataToSend);
+}
+
+// 使用示例：
+ajax(
+    'http://localhost:8080/server/ajaxtest', {
+        data: {
+            name: 'simon',
+            password: '123456'
+        },
+        onsuccess: function (responseText, xhr) {
+            console.log(responseText);
+        },
+        onfail: function (xhr) {
+            console.log("status: " + xhr.status + ", message: " + xhr.statusText);
+        }
+    }
+);
