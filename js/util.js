@@ -279,7 +279,7 @@ $("[data-log]"); // 返回第一个包含属性data-log的对象
 $("[data-time=2015]"); // 返回第一个包含属性data-time且值为2015的对象
 
 // 可以通过简单的组合提高查询便利性，例如
-$("#adom .classa"); // 返回id为adom的DOM所包含的所有子节点中，第一个样式定义包含classa的对象
+// $("#adom .classa"); // 返回id为adom的DOM所包含的所有子节点中，第一个样式定义包含classa的对象
 
 // addEvent给一个element绑定一个针对event事件的响应，响应函数为listener
 $.on = function (element, event, listener) {
@@ -294,7 +294,7 @@ function clicklistener(event) {
 
 }
 // addEvent($("#addbtn"), "click", clicklistener);
-$.on("#addbtn", "click", clicklistener);
+// $.on("#addbtn", "click", clicklistener);
 
 // removeEvent移除element对象对于event事件发生时执行listener的响应
 $.un = function (element, event, listener) {
@@ -317,7 +317,7 @@ $.enter = function (element, listener) {
     }, false);
 }
 
-$.enter($("#number1"), clicklistener);
+// $.enter($("#number1"), clicklistener);
 
 // 先简单一些
 function delegateEvent(element, tag, eventName, listener) {
@@ -334,10 +334,10 @@ $.delegate = delegateEvent;
 
 // 使用示例
 // 还是上面那段HTML，实现对list这个ul里面所有li的click事件进行响应
-$.delegate("#list", "li", "click", clicklistener);
+// $.delegate("#list", "li", "click", clicklistener);
 
 // 使用示例：
-$.click("[my_attr_name]", clicklistener);
+// $.click("[my_attr_name]", clicklistener);
 
 // 判断是否为IE浏览器，返回-1或者版本号
 function isIE() {
@@ -438,3 +438,25 @@ ajax(
         }
     }
 );
+
+/* -------------------------------小练习-------------------------------- */
+
+$.on("#btn", "click", function () {
+    var hobby = $("#hobby").value.split(","),
+        hobby1 = [];
+    for (let i = 0; i < hobby.length; i++) {
+        if (hobby[i]) {
+            for (var j = 0; j < hobby1.length; j++) {
+                if (hobby1[j] == hobby[i]) {
+                    break;
+                }
+            }
+            if (j == hobby1.length) {
+                // console.log(hobby[i]);
+                hobby1[hobby1.length] = hobby[i];
+            }
+        }
+
+    }
+    $("#realhobby").innerHTML = hobby1;
+});
