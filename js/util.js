@@ -439,7 +439,7 @@ function ajax(url, options) {
 // }
 // );
 
-/* --------------------------------------------------------------- */
+/* --------------------------------1------------------------------- */
 function gethobby() {
     var hobby = $("#hobby2").value.split(/\,|\uFF0C|\;|\uFF1B|\u3001|\ |\n/),
         hobby1 = [];
@@ -472,4 +472,52 @@ function gethobby() {
 }
 // $.on("#btn", "click", gethobby);
 
-$.on("#btn2", "click", gethobby);
+// $.on("#btn2", "click", gethobby);
+
+/* --------------------------------2------------------------------- */
+function twoDigit(num) {
+    if (num < 10) {
+        return '0' + num;
+    } else {
+        return num;
+    }
+}
+var timer = {
+    zero: 0,
+    countTime: function () {
+
+        var arr = $("#inputime").value.split("-"),
+            d = new Date(),
+            offset = d.getTimezoneOffset() / 60;
+        var month = arr[1] - '0' - 1,
+            dif = Date.UTC(arr[0] - '0', month, arr[2] - '0', -12, -39) - d.getTime();
+        if (dif < 0) {
+            dif = dif * (-1);
+        }
+        var day = Math.floor(dif / (24 * 60 * 60 * 1000)),
+            hour = Math.floor(dif % (24 * 60 * 60 * 1000) / (60 * 60 * 1000)),
+            min = Math.floor(dif % (24 * 60 * 60 * 1000) % (60 * 60 * 1000) / (60 * 1000)),
+            sec = Math.floor(dif % (24 * 60 * 60 * 1000) % (60 * 60 * 1000) % (60 * 1000) / 1000);
+        if (!day && !hour && !min && !sec) {
+            this.zero = 1;
+        }
+        var str = "距离" + arr[0] + "年" + arr[1] + "月" + arr[2] + "日还有" + twoDigit(day) + "天" + twoDigit(hour) + "小时" + twoDigit(min) + "分" + twoDigit(sec) + "秒";
+        // console.log(str);
+        $("#showtime").innerHTML = str;
+
+    },
+    startCount: function () {
+        var c = setTimeout(function () {
+            if (timer.zero) {
+                clearInterval(c);
+            } else {
+                timer.countTime();
+
+            }
+
+        }, 1000);
+        // console.log(this.zero);
+    }
+};
+
+$.on("#btn", "click", timer.startCount);
