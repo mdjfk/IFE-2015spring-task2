@@ -6,7 +6,9 @@
     <title>T0002_3</title>
     <style>
         .pics img {
-            display: none;
+            /* display: none; */
+            height: 179px;
+            width: 300px;
         }
     </style>
 </head>
@@ -15,11 +17,11 @@
     <div>
         <div class="pics">
             <img src="images/col3-1.jpg" alt="col3-1">
-            <img src="images/col3-2.jpg" alt="col3-2">
-            <img src="images/col3-3.jpg" alt="col3-3">
-            <img src="images/middle-01.jpg" alt="middle-01">
-            <img src="images/middle-02.jpg" alt="middle-02">
-            <img src="images/middle-03.jpg" alt="middle-03">
+            <img src="images/col3-2.jpg" alt="col3-2" style="display: none;">
+            <img src="images/col3-3.jpg" alt="col3-3" style="display: none;">
+            <img src="images/middle-01.jpg" alt="middle-01" style="display: none;">
+            <img src="images/middle-02.jpg" alt="middle-02" style="display: none;">
+            <img src="images/middle-03.jpg" alt="middle-03" style="display: none;">
         </div>
         <div class="dots">
 
@@ -28,22 +30,22 @@
     <div>
         <p>Settings:</p>
         <div>
-            <input type="radio" name="sequence" id="forward">
+            <input type="radio" name="sequence" value="nextElementSibling" id="forward">
             <label for="forward">forward</label>
-            <input type="radio" name="sequence" id="backward">
+            <input type="radio" name="sequence" value="previousElementSibling" id="backward">
             <label for="backward">backward</label>
         </div>
         <br>
         <div>
-            <input type="radio" name="circle" id="circle">
+            <input type="radio" name="circle" value="circle" id="circle">
             <label for="circle">circle</label>
-            <input type="radio" name="circle" id="non-circle">
+            <input type="radio" name="circle" value="non-circle" id="non-circle">
             <label for="non-circle">non-circle</label>
         </div>
         <br>
         <div>
-            <input type="text" placeholder="interval">
-            <button id="setInterval">Set Interval</button>
+            <input type="text" placeholder="interval" id="interval">
+            <button id="setInterval">SET</button>
         </div>
 
     </div>

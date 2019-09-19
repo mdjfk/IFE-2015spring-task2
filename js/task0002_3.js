@@ -1,18 +1,65 @@
-var nodeList = $(".pics").childNodes,
-    len = nodeList.length,
-    node = nodeList[0],
-    direct;
-if (forward) {
-    direct = "nextSibling";
-} else {
-    direct = "previousSibling";
-}
-while (node && (circle || cnt)) {
-    // $(".pics") img display none
-    node.style.display = inline;
-    setTimeout(function () {
-        // node.style.display = none; //Is node still the same?
+var myTimer = null,
+    hideNode = null;
 
-    }, interval);
-    node = node[direct];
+function lun() {
+    var cnt = $(".pics").childElementCount,
+        node = $(".pics").firstElementChild,
+        direct = getRadioVal("sequence") || "nextElementSibling",
+        circle = getRadioVal("circle") || "circle",
+        interval = $("#interval").value;
+
+    function hide() {
+        hideNode.style.display = "none";
+        node = getNextNode(hideNode);
+    }
+
+    function getNextNode(node) {
+        nextNode = node[direct];
+        if (!nextNode) {
+            if ("nextElementSibling" === direct) {
+                nextNode = $(".pics").firstElementChild;
+            } else {
+                nextNode = $(".pics").lastElementChild;
+            }
+        }
+        return nextNode;
+    }
+
+    function getRadioVal(name) {
+        var radios = document.getElementsByName(name);
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                return radios[i].value;
+            }
+        }
+        return undefined;
+    }
+
+    function change() {
+        if ("circle" === circle || cnt) {
+            if (hideNode) {
+                hideNode.style.display = "none";
+            }
+            console.log(node.alt);
+            node.style.display = "inline";
+            hideNode = node;
+            cnt--;
+            myTimer = setTimeout(function () {
+                change();
+            }, interval);
+            node = getNextNode(node);
+        }
+    }
+
+    function isClick() {
+        if (myTimer) {
+            clearTimeout(myTimer);
+            hide();
+        }
+    }
+
+    isClick();
+    change();
 }
+
+$.on("#setInterval", "click", lun);
