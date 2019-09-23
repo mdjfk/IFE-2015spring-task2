@@ -63,3 +63,11 @@ function lun() {
 }
 
 $.on("#setInterval", "click", lun);
+
+$.click(".dots", function (e) {
+    var target = e.target;
+    if (target.className === "dot") {
+        target.style.backgroundColor = "lightgray";
+    }
+});
+
