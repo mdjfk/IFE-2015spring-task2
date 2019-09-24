@@ -12,7 +12,7 @@ function getSetting() {
     cnt = $(".pics").childElementCount;
     direct = getRadioVal("sequence") || "nextElementSibling";
     circle = getRadioVal("circle") || "circle";
-    interval = $("#interval").value;
+    interval = $("#interval").value || 3000;
 }
 
 /** hide current pic and set node to next node  */
@@ -74,7 +74,7 @@ function change() {
         node.style.display = "inline";
         hideNode = node;
         cnt--;
-        console.log("cnt: " + cnt);
+        // console.log("cnt: " + cnt);
         myTimer = setTimeout(function () {
             node = getNextNode(node);
             change();
