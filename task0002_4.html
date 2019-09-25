@@ -5,14 +5,45 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>T0002_4</title>
     <style>
+        .pos {
+            width: 300px;
+            height: 170px;
+            margin: 100px auto;
+        }
 
+        .optionGroup {
+            border: 1px solid grey;
+            position: relative;
+            top: -1px;
+            display: none;
+        }
+
+        .option {
+            /* width: 80px; */
+            /* height: 30px; */
+            color: black;
+            font-size: 20px;
+            line-height: 26px;
+            cursor: pointer;
+            /* border: 1px solid black; */
+        }
+
+        .option:hover {
+            background-color: lightgrey;
+        }
     </style>
 </head>
 
 <body>
-    <div>
-        <input type="text" id="input">
-
+    <div class="pos">
+        <input list="input" type="text" id="input">
+        <div class="optionGroup">
+            <div class="option">Name1</div>
+            <div class="option">Name2</div>
+            <div class="option">Name3</div>
+            <div class="option">Name4</div>
+            <div class="option">Name5</div>
+        </div>
     </div>
 
     <script src="js/util.js"></script>
