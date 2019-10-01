@@ -55,10 +55,6 @@ $.click("#input", function () {
     $(".optionGroup").style.display = "block";
 });
 
-$.on("#input", "focus", function () {
-    $(".optionGroup").style.display = "block";
-});
-
 $.click(".optionGroup", function (e) {
     this.style.display = "none";
     setBackgroundWhite();
