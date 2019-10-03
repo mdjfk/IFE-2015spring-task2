@@ -30,13 +30,15 @@ var dragDrop = function () {
             case "mouseup":
                 console.log("mouseup");
                 dragging.style.zIndex = "2";
-                var x = parseInt(dragging.style.left) + 100,
-                    a = $("#dropTarget1").offsetLeft + 200,
-                    b = $("#dropTarget2").offsetLeft;
 
+                var x = parseInt(dragging.style.left) + 100, //middle of the moving bar
+                    a = $("#dropTarget1").offsetLeft + 200, //dropTarget1's right end
+                    b = $("#dropTarget2").offsetLeft; //dropTarget2's left end
                 if (x - a < b - x) {
+                    //the bar is closer to dropTarget1
                     dragging.style.left = $("#dropTarget1").offsetLeft + 1 + "px";
                 } else {
+                    //the bar is closer to dropTarget2
                     dragging.style.left = $("#dropTarget2").offsetLeft + 1 + "px";
                 }
 
